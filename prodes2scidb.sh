@@ -8,6 +8,15 @@
 # ./prodes2scidb.sh -61.8061 -61.16994 -8.110165 -7.628022 /home/scidb/alber/prodes2016/deforestation.shp /home/scidb/alber/prodes2016/forest.shp
 ################################################################################
 
+# validation
+if [ "$#" -ne 6 ]; then
+  echo "ERROR: wrong number of parameters! - 6 expected: lonmin lonmax latmin latmax deforestation_shp forest_shp " >&2
+  exit 1
+fi
+
+
+
+# get parameters from the console
 lonmin=$1
 lonmax=$2
 latmin=$3
