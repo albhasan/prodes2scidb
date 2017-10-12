@@ -9,7 +9,7 @@
 ################################################################################
 
 # validation
-if [ "$#" -ne 1 ]; then
+if [ "$#" -ne 6 ]; then
   echo "ERROR: wrong number of parameters! - 6 expected: lonmin lonmax latmin latmax deforestation_shp forest_shp " >&2
   exit 1
 fi
