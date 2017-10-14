@@ -2,7 +2,7 @@
 ################################################################################
 # PRODES TO SCIDB
 #-------------------------------------------------------------------------------
-# Rasterize PRODES-DETER shapefiles to match SciDB MOD13Q1 array
+# Rasterize PRODES shapefiles to match SciDB MOD13Q1 array
 #-------------------------------------------------------------------------------
 # Example:
 # ./prodes2scidb.sh -61.8061 -61.16994 -8.110165 -7.628022 /home/scidb/alber/prodes2016/deforestation.shp /home/scidb/alber/prodes2016/forest.shp
@@ -69,9 +69,11 @@ sed -i '1d' mcJdef.csv
 cat mcJfor.csv >> mcJdef.csv
 
 echo "Loading to SciDB..."
-#iquery -aq "remove(DEFORESTATION)" 2> /dev/null; iquery -aq  "CREATE ARRAY DEFORESTATION <mainclass:string, class_name:string, yyyydoy:int32, view_date:string>[col_id=0:172799:0:40; row_id=0:86399:0:40]"
-iquery -naq "insert(redimension(cast(input(<col_id:int64, row_id:int64, mainclass:string, class_name:string, yyyydoy:double, view_date:string>[i=0:*,?,0], '$cdir/mcJdef.csv', -2, 'CSV'), <col_id:int64, row_id:int64, mainclass:string, class_name:string, yyyydoy:int32, view_date:string>[i=0:*,?,0]), DEFORESTATION), DEFORESTATION)"
+# NOTE: Generate the SciDB array
+#iquery -aq "remove(DEFORESTATION_PRODES)" 2> /dev/null; iquery -aq  "CREATE ARRAY DEFORESTATION_PRODES <mainclass:string, class_name:string, yyyydoy:int32, view_date:string>[col_id=0:172799:0:40; row_id=0:86399:0:40]"
+iquery -naq "insert(redimension(cast(input(<col_id:int64, row_id:int64, mainclass:string, class_name:string, yyyydoy:double, view_date:string>[i=0:*,?,0], '$cdir/mcJdef.csv', -2, 'CSV'), <col_id:int64, row_id:int64, mainclass:string, class_name:string, yyyydoy:int32, view_date:string>[i=0:*,?,0]), DEFORESTATION_PRODES), DEFORESTATION_PRODES)"
 
-echo "Cleaning..."
 
+#echo "Cleaning..."
+echo "Finished!"
 
